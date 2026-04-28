@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Chat Azul Magalu</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/style.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            /* Cores - Inspirado no Azul Magalu */
+            --chat--color--primary: #0086FF;
+            /* Azul Magalu vibrante */
+            --chat--color--primary-shade-50: #007BEB;
+            --chat--color--primary--shade-100: #0069CC;
+            --chat--color--secondary: #0086FF;
+            /* Usamos o mesmo azul para as mensagens do usuário */
+            --chat--color-secondary-shade-50: #007BEB;
+            --chat--color-white: #ffffff;
+            --chat--color-light: #f7f9fc;
+            --chat--color-light-shade-50: #eef1f6;
+            --chat--color-light-shade-100: #d6dbe5;
+            --chat--color-medium: #c2c8d6;
+            --chat--color-dark: #2b3a4a;
+            --chat--color-disabled: #d6dbe5;
+            --chat--color-typing: #0086FF;
+
+            /* Layout Amigável (Bordas arredondadas) */
+            --chat--spacing: 1rem;
+            --chat--border-radius: 1.25rem;
+            --chat--transition-duration: 0.2s;
+            --chat--font-family: 'Nunito', 'Poppins', 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            --chat--window--width: 400px;
+            --chat--window--height: 600px;
+            --chat--window--bottom: calc(var(--chat--spacing) * 1.5);
+            --chat--window--right: calc(var(--chat--spacing) * 1.5);
+            --chat--window--z-index: 9999;
+            --chat--window--border: 1px solid var(--chat--color-light-shade-50);
+            --chat--window--border-radius: 1.5rem;
+            --chat--window--margin-bottom: var(--chat--spacing);
+
+            --chat--header-height: auto;
+            --chat--header--padding: 1.25rem;
+            --chat--header--background: var(--chat--color--primary);
+            --chat--header--color: var(--chat--color-white);
+            --chat--header--border-top: none;
+            --chat--header--border-bottom: none;
+            --chat--header--border-left: none;
+            --chat--header--border-right: none;
+            --chat--heading--font-size: 1.5em;
+            --chat--subtitle--font-size: 0.9em;
+            --chat--subtitle--line-height: 1.5;
+
+            --chat--message--font-size: 1rem;
+            --chat--message--padding: 0.8rem 1.2rem;
+            --chat--message--border-radius: var(--chat--border-radius);
+            --chat--message-line-height: 1.5;
+            --chat--message--margin-bottom: calc(var(--chat--spacing) * 0.8);
+            --chat--message--bot--background: var(--chat--color-white);
+            --chat--message--bot--color: var(--chat--color-dark);
+            --chat--message--bot--border: 1px solid var(--chat--color-light-shade-50);
+            --chat--message--user--background: var(--chat--color--secondary);
+            --chat--message--user--color: var(--chat--color-white);
+            --chat--message--user--border: none;
+            --chat--message--pre--background: rgba(0, 0, 0, 0.05);
+            --chat--messages-list--padding: 1.25rem;
+
+            --chat--toggle--size: 64px;
+            --chat--toggle--width: var(--chat--toggle--size);
+            --chat--toggle--height: var(--chat--toggle--size);
+            --chat--toggle--border-radius: 50%;
+            --chat--toggle--background: var(--chat--color--primary);
+            --chat--toggle--hover--background: var(--chat--color--primary-shade-50);
+            --chat--toggle--active--background: var(--chat--color--primary--shade-100);
+            --chat--toggle--color: var(--chat--color-white);
+
+            --chat--textarea--height: 50px;
+            --chat--textarea--max-height: 30rem;
+            --chat--input--font-size: 1rem;
+            --chat--input--border: 1px solid var(--chat--color-light-shade-50);
+            --chat--input--border-radius: 2rem;
+            --chat--input--padding: 0.8rem 1.2rem;
+            --chat--input--background: var(--chat--color-white);
+            --chat--input--text-color: var(--chat--color-dark);
+            --chat--input--line-height: 1.5;
+            --chat--input--placeholder--font-size: var(--chat--input--font-size);
+            --chat--input--border-active: 1px solid var(--chat--color--secondary);
+            --chat--input--left--panel--width: 2rem;
+
+            --chat--button--padding: 0.8rem 1.5rem;
+            --chat--button--border-radius: 2rem;
+            --chat--button--font-size: 1rem;
+            --chat--button--line-height: 1;
+            --chat--button--color--primary: var(--chat--color-white);
+            --chat--button--background--primary: var(--chat--color--secondary);
+            --chat--button--border--primary: none;
+            --chat--button--color--primary--hover: var(--chat--color-white);
+            --chat--button--background--primary--hover: var(--chat--color-secondary-shade-50);
+            --chat--button--border--primary--hover: none;
+            --chat--button--color--primary--disabled: var(--chat--color-white);
+            --chat--button--background--primary--disabled: #a6e0db;
+            --chat--button--border--primary--disabled: none;
+            --chat--button--color--secondary: var(--chat--color-dark);
+            --chat--button--background--secondary: var(--chat--color-light-shade-50);
+            --chat--button--border--secondary: none;
+            --chat--button--color--secondary--hover: var(--chat--color-dark);
+            --chat--button--background--secondary--hover: var(--chat--color-light-shade-100);
+            --chat--button--border--secondary--hover: none;
+            --chat--button--color--secondary--disabled: var(--chat--color-medium);
+            --chat--button--background--secondary--disabled: var(--chat--color-light);
+            --chat--button--border--secondary--disabled: none;
+            --chat--close--button--color-hover: var(--chat--color--primary-shade-50);
+
+            --chat--input--send--button--background: var(--chat--color--secondary);
+            --chat--input--send--button--color: var(--chat--color-white);
+            --chat--input--send--button--background-hover: var(--chat--color-secondary-shade-50);
+            --chat--input--send--button--color-hover: var(--chat--color-white);
+            --chat--input--file--button--background: var(--chat--color-white);
+            --chat--input--file--button--color: var(--chat--color-medium);
+            --chat--input--file--button--background-hover: var(--chat--color-light);
+            --chat--input--file--button--color-hover: var(--chat--color--primary);
+            --chat--files-spacing: 0.25rem;
+
+            --chat--body--background: var(--chat--color-light);
+            --chat--footer--background: var(--chat--color-white);
+            --chat--footer--color: var(--chat--color-dark);
+        }
+
+        .chat-message {
+            max-width: 80%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+
+<body style="background-color: #f0f0f0; height: 100vh; margin: 0; font-family: sans-serif;">
+
+    <h1 style="padding: 2rem;">Meu Site</h1>
+    <p style="padding: 0 2rem;">O botão do chat vai aparecer no canto inferior direito! ↘️</p>
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat@1/+esm';
+
+        createChat({
+            webhookUrl: 'https://n8n-automacao.luizalabs.com/webhook/b2575ee3-6c00-492a-b406-06214e44cc38/chat',
+            /* Bloco de tradução para Português */
+            i18n: {
+                en: {
+                    title: 'Olá! Como posso ajudar? 👋',
+                    subtitle: 'Fale com a nossa equipe. Estamos aqui para você.',
+                    getStarted: 'Nova conversa',
+                    inputPlaceholder: 'Digite sua mensagem...',
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
