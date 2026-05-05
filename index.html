@@ -4,84 +4,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Magalu - n8n</title>
+    <title>ZAP LAB - Portal das Lojas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/style.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <style>
         :root {
-            /* Cores - Azul Magalu */
+            /* Cores Chat - Inspirado na Identidade Visual (Azul) */
             --chat--color--primary: #0086FF;
             --chat--color--primary-shade-50: #007BEB;
             --chat--color--primary--shade-100: #0069CC;
             --chat--color--secondary: #0086FF;
             --chat--color-secondary-shade-50: #007BEB;
             --chat--color-white: #ffffff;
-            --chat--color-light: #f7f9fc;
-            --chat--color-light-shade-50: #eef1f6;
-            --chat--color-light-shade-100: #d6dbe5;
-            --chat--color-medium: #c2c8d6;
             --chat--color-dark: #2b3a4a;
             --chat--color-disabled: #d6dbe5;
             --chat--color-typing: #0086FF;
 
-            /* Layout Arredondado */
             --chat--spacing: 1rem;
             --chat--border-radius: 1.25rem;
-            --chat--font-family: 'Nunito', 'Poppins', sans-serif;
+            --chat--font-family: 'Inter', 'Nunito', sans-serif;
 
             --chat--window--width: 400px;
             --chat--window--height: 600px;
             --chat--window--border-radius: 1.5rem;
-
             --chat--header--background: var(--chat--color--primary);
             --chat--header--color: var(--chat--color-white);
-            --chat--heading--font-size: 1.5em;
 
-            --chat--message--padding: 0.8rem 1.2rem;
-            --chat--message--border-radius: 1.25rem;
-            --chat--message--bot--background: var(--chat--color-white);
-            --chat--message--bot--border: 1px solid var(--chat--color-light-shade-50);
-            --chat--message--user--background: var(--chat--color--secondary);
-
-            --chat--input--border-radius: 2rem;
-            --chat--toggle--background: var(--chat--color--primary);
+            /* Botão do Chat (Bolinha) */
+            --chat--toggle--background: #FFD000;
+            --chat--toggle--hover--background: #F0C200;
+            --chat--toggle--active--background: #E0B400;
+            --chat--toggle--icon--color: #002A5E;
         }
 
-        .chat-message {
-            max-width: 85%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        body {
+            background-color: #f8fafc;
+        }
+
+        .bg-magalu {
+            background-color: #0086FF;
+        }
+
+        .text-magalu {
+            color: #0086FF;
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
 
-<body style="background-color: #f0f0f0; margin: 0; font-family: sans-serif;">
+<body class="font-sans antialiased text-slate-800 flex h-screen overflow-hidden">
 
+    <!-- Menu Lateral (Sidebar) -->
+    <aside class="w-64 bg-magalu text-white flex flex-col shadow-2xl h-full z-20 hidden md:flex">
+        <!-- Logo e Título -->
+        <div class="px-6 py-8 border-b border-blue-400 border-opacity-30 flex items-center gap-3">
+            <div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center text-blue-900 shadow-inner">
+                <i class="fas fa-flask text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-black tracking-tight leading-none">ZAP LAB</h1>
+                <p class="text-[0.65rem] text-blue-200 mt-1 font-bold tracking-widest">PORTAL DAS LOJAS</p>
+            </div>
+        </div>
+
+        <!-- Navegação Menu Principal -->
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 bg-white bg-opacity-20 rounded-xl font-bold border border-white border-opacity-10 transition-all">
+                <i class="fas fa-home w-5"></i> Início do Laboratório
+            </a>
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-white hover:bg-opacity-10 rounded-xl font-semibold opacity-80 hover:opacity-100 transition-all">
+                <i class="fas fa-store w-5"></i> Consulta de Lojas
+            </a>
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-white hover:bg-opacity-10 rounded-xl font-semibold opacity-80 hover:opacity-100 transition-all">
+                <i class="fas fa-bug w-5"></i> Reportar Bug no App
+            </a>
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-white hover:bg-opacity-10 rounded-xl font-semibold opacity-80 hover:opacity-100 transition-all">
+                <i class="fas fa-comments w-5"></i> Enviar Feedback
+            </a>
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-white hover:bg-opacity-10 rounded-xl font-semibold opacity-80 hover:opacity-100 transition-all">
+                <i class="fas fa-book-open w-5"></i> Processos e Manuais
+            </a>
+        </nav>
+
+        <!-- Perfil Logado -->
+        <div class="p-4">
+            <div
+                class="bg-blue-900 bg-opacity-40 rounded-xl p-4 flex items-center gap-3 border border-blue-400 border-opacity-20 hover:bg-opacity-60 cursor-pointer transition-all">
+                <img src="https://ui-avatars.com/api/?name=Filial+Oeste&background=FFD000&color=0086FF&bold=true"
+                    alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+                <div>
+                    <p class="font-bold text-sm">Filial Oeste</p>
+                    <p class="text-xs text-blue-200">Acesso Loja</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Área Principal (Main Content) -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto relative bg-slate-50">
+        <!-- Header Superior -->
+        <header class="bg-white px-8 py-5 flex items-center justify-between shadow-sm sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-slate-500 hover:text-magalu text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="relative hidden sm:block">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" placeholder="Pesquisar soluções, guias ou chamados..."
+                        class="pl-12 pr-4 py-2 bg-slate-100 rounded-lg text-sm w-96 focus:outline-none focus:ring-2 focus:ring-magalu focus:bg-white transition-all font-medium">
+                </div>
+            </div>
+            <div class="flex items-center gap-5 text-slate-500">
+                <button class="hover:text-magalu transition-colors">
+                    <i class="fas fa-question-circle text-xl"></i>
+                </button>
+                <button class="hover:text-magalu relative transition-colors">
+                    <i class="far fa-bell text-xl"></i>
+                    <span
+                        class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Conteúdo do Dashboard -->
+        <div class="p-8 pb-32 max-w-7xl mx-auto w-full">
+            <div class="mb-10">
+                <h2 class="text-3xl font-black text-slate-800 mb-2">Bem-vindo ao ZAP LAB! 🧪🚀</h2>
+                <p class="text-slate-500 font-medium text-lg">Seu centro para dúvidas sistêmicas, evolução de apps e
+                    suporte diário.</p>
+            </div>
+
+            <!-- Cards de Ações Rápidas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group hover:border-blue-200">
+                    <div
+                        class="w-12 h-12 bg-blue-50 text-magalu rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-magalu group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-store-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg mb-1">Buscar Lojas</h3>
+                    <p class="text-sm text-slate-500 pb-2">Consulte informações e parâmetros cadastrais com facilidade.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group hover:border-red-200">
+                    <div
+                        class="w-12 h-12 bg-red-50 text-red-500 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-red-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg mb-1">Reportar Bug</h3>
+                    <p class="text-sm text-slate-500 pb-2">Sistemas falhando ou lentos? Avise o time técnico agora.</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group hover:border-yellow-200">
+                    <div
+                        class="w-12 h-12 bg-yellow-50 text-yellow-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-yellow-400 group-hover:text-yellow-900 transition-colors duration-300">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg mb-1">Dar Feedback</h3>
+                    <p class="text-sm text-slate-500 pb-2">Tem uma ideia para melhorar o uso diário nas lojas? Conte pra
+                        nós!</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer group hover:border-emerald-200">
+                    <div
+                        class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg mb-1">Dúvidas Frequentes</h3>
+                    <p class="text-sm text-slate-500 pb-2">Manuais com o Passo a Passo dos sistemas que você usa.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Painel de Status dos Sistemas -->
+                <div class="col-span-1 lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                        <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                            <i class="fas fa-server text-slate-400"></i> Status de Aplicações
+                        </h3>
+                        <a href="#" class="text-sm text-magalu font-bold hover:underline">Monitor Completo</a>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div
+                            class="flex items-center justify-between p-4 rounded-xl border border-slate-50 bg-slate-50 hover:bg-white hover:border-slate-200 transition-all">
+                            <div class="flex items-center gap-3">
+                                <span class="relative flex h-3 w-3">
+                                    <span
+                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                </span>
+                                <span class="font-semibold text-slate-700">App Mobile Vendas</span>
+                            </div>
+                            <span
+                                class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Normal</span>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between p-4 rounded-xl border border-slate-50 bg-slate-50 hover:bg-white hover:border-slate-200 transition-all">
+                            <div class="flex items-center gap-3">
+                                <span class="relative flex h-3 w-3">
+                                    <span
+                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                </span>
+                                <span class="font-semibold text-slate-700">Sistema Retaguarda (PDV)</span>
+                            </div>
+                            <span
+                                class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Normal</span>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between p-4 rounded-xl border border-amber-50 bg-amber-50/50">
+                            <div class="flex items-center gap-3">
+                                <span class="relative flex h-3 w-3">
+                                    <span
+                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                                </span>
+                                <span class="font-semibold text-amber-800">Servidor de Notas Fiscais NFe</span>
+                            </div>
+                            <span class="text-xs font-bold text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Lentidão
+                                Reportada</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Interativo Chamar Chat -->
+                <div
+                    class="col-span-1 bg-gradient-to-br from-[#0086FF] to-[#0047AB] rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,134,255,0.5)] p-8 text-white relative overflow-hidden flex flex-col justify-center">
+                    <div class="absolute -right-8 -top-8 opacity-10 filter blur-sm transform rotate-12">
+                        <i class="fas fa-robot text-[12rem]"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-2xl mb-4 backdrop-blur-sm border border-white border-opacity-30">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="text-2xl font-black mb-3 leading-tight">Precisando de suporte agora?</h3>
+                        <p class="text-blue-100 text-sm mb-6 leading-relaxed font-medium">Nossa IA está treinada nas
+                            políticas do Lab para tirar suas dúvidas de sistema e repassar falhas.</p>
+                        <div
+                            class="bg-white bg-opacity-10 py-3 px-4 rounded-xl flex items-center justify-between font-bold text-sm border border-white border-opacity-20 animate-pulse">
+                            Abra o Chat abaixo <i class="fas fa-arrow-down mb-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script Original do n8n para o Bot -->
     <script type="module">
         import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat@1/+esm';
 
         createChat({
-            // URL ajustada para o formato de Webhook (sem o /chat no final)
             webhookUrl: 'https://n8n-automacao.luizalabs.com/webhook/7a04e5a6-df64-41d6-8fac-77300432bd9e/chat',
-
-            /* Mensagens iniciais em Português */
             initialMessages: [
-                'Olá! Bem-vindo ao Magalu! 💙',
-                'Como posso te ajudar hoje?'
+                'Olá! Sou o Assistente do ZAP LAB! 🧪💻',
+                'Estou aqui para tirar suas dúvidas sobre sistemas, te ajudar com lojas ou registrar bugs.',
+                'Como posso facilitar sua vida hoje?'
             ],
-
-            /* Tradução da interface */
             i18n: {
                 en: {
-                    title: 'Olá! Como posso ajudar? 👋',
-                    subtitle: 'Fale com a nossa equipe. Estamos aqui para você.',
+                    title: 'Suporte ZAP LAB 👋',
+                    subtitle: 'Em que posso ser útil hoje?',
                     getStarted: 'Nova conversa',
-                    inputPlaceholder: 'Digite sua mensagem...',
+                    inputPlaceholder: 'Descreva sua dúvida, problema ou feedback...',
                 }
             }
         });
     </script>
-
 </body>
 
 </html>
